@@ -1,0 +1,47 @@
+# I use intellij a lot (pycharm less so)
+.idea/
+build/
+test/
+out/
+
+# Gradle stuff
+.gradle/
+gradle.properties
+
+# C stuff
+*.o
+*.ko
+*.d
+*.obj
+*.elf
+
+# General java stuff
+*.class
+*.log
+*.ctxt
+*.jar
+
+# Python stuff
+__pycache__/
+*.so
+*.egg
+MANIFEST
+*.manifest
+*.spec
+.env
+.venv
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Just general stuff
+*.exe
+*.dll
+*.lib
+*.out
+*.app
+
+*.zip
+*.tar.gz
+
