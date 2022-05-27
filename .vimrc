@@ -59,6 +59,10 @@ set so=7
 " Set line numbers
 set number
 
+" Disable the bell sound.
+set noerrorbells
+set vb t_vb=
+
 " Avoid garbled characters in Chinese language windows OS
 let $LANG='en'
 set langmenu=en
