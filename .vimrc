@@ -25,12 +25,14 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sets how many lines of history VIM has to remember
 set history=500
+
+" Enter the 21st century
+set nocompatible
 
 " Enable filetype plugins
 filetype plugin on
@@ -42,7 +44,7 @@ au FocusGained,BufEnter * checktime
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-let mapleader = ","
+let mapleader = " "
 
 " Fast saving
 nmap <leader>w :w!<cr>
@@ -51,14 +53,13 @@ nmap <leader>w :w!<cr>
 " (useful for handling the permission-denied error)
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
-" Set line numbers
+" Enable line numbers
 set number
 
 " Avoid garbled characters in Chinese language windows OS
@@ -66,9 +67,6 @@ let $LANG='en'
 set langmenu=en
 source $VIMRUNTIME/delmenu.vim
 source $VIMRUNTIME/menu.vim
-
-" Turn on the Wild menu
-set wildmenu
 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
@@ -142,6 +140,7 @@ if $COLORTERM == 'gnome-terminal'
 endif
 
 set background=dark
+" NOTE: Colorscheme is at the bottom of the file, below plugins
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -157,7 +156,6 @@ set encoding=utf8
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -166,6 +164,14 @@ set nobackup
 set nowb
 set noswapfile
 
+" Searches into subfiles
+set path+=**
+set wildmenu
+
+" File Explorer
+let g:netrw_keepdir = 0               " Keep the current dir synced.
+let g:netrw_winsize = 26              " 30% of the window.
+let g:netrw_localcopydircmd = 'cp -r' " Change the copy cmd (to make it recursive).
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
@@ -201,10 +207,6 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-map <C-space> ?
-
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
 
@@ -245,8 +247,8 @@ map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Specify the behavior when switching between buffers
 try
-  set switchbuf=useopen,usetab,newtab
-  set stal=2
+    set switchbuf=useopen,usetab,newtab
+    set stal=2
 catch
 endtry
 
@@ -263,7 +265,6 @@ set laststatus=2
 " Format the status line
 set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -277,10 +278,10 @@ vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
+    nmap <D-j> <M-j>
+    nmap <D-k> <M-k>
+    vmap <D-j> <M-j>
+    vmap <D-k> <M-k>
 endif
 
 " Delete trailing white space on save, useful for some filetypes ;)
@@ -300,14 +301,19 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
+" Enable Spell checking by default on startup.
+set spell spelllang=en_us
+
+" Pressing st will toggle and untoggle spell checking
+map <leader>st :setlocal spell!<cr>
 
 " Shortcuts using <leader>
 map <leader>sn ]s
 map <leader>sp [s
 map <leader>sa zg
 map <leader>s? z=
+
+nnoremap <leader>ss :normal! mm[s1z=`m<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
@@ -382,16 +388,6 @@ endfunction
 " => Vim-Plug
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
-" The default plugin directory will be as follows:
-"   - Vim (Linux/macOS): '~/.vim/plugged'
-"   - Vim (Windows): '~/vimfiles/plugged'
-"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
-" You can specify a custom plugin directory by passing it as the argument
-"   - e.g. `call plug#begin('~/.vim/plugged')`
-"   - Avoid using standard Vim directory names like 'plugin'
-
-" Make sure you use single quotes
-
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 
@@ -420,6 +416,9 @@ Plug '~/my-prototype-plugin'
 " Onedark color theme
 Plug 'https://github.com/joshdick/onedark.vim.git'
 
+" Vim restart plugin
+Plug 'https://github.com/vim-scripts/restart.vim.git'
+
 " Initialize plugin system
 call plug#end()
 
@@ -434,11 +433,27 @@ endtry
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " A function to create abbreviations.
 fu! Cabbrev(key, value)
-  exe printf('cabbrev <expr> %s (getcmdtype() == ":" && getcmdpos() <= %d) ? %s : %s',
-    \ a:key, 1+len(a:key), string(a:value), string(a:key))
+    exe printf('cabbrev <expr> %s (getcmdtype() == ":" && getcmdpos() <= %d) ? %s : %s',
+                \ a:key, 1+len(a:key), string(a:value), string(a:key))
 endfu
 
 " Simplify Explore
 " fe -> file explore
 call Cabbrev('fe', 'Explore')
+call Cabbrev('fev', 'Vexplore')
+
+" Underline heading in markdown.
+function! UnderlineHeading(level)
+    if a:level == 1
+        normal! yypVr=
+    elseif a:level == 2
+        normal! yypVr-
+    else
+        normal! I###<space>
+    endif
+endfunction
+
+nnoremap <leader>u1 :call UnderlineHeading(1);<CR>
+nnoremap <leader>u2 :call UnderlineHeading(2);<CR>
+nnoremap <leader>u3 :call UnderlineHeading(3);<CR>
 
