@@ -21,6 +21,7 @@
 "    -> Misc
 "    -> Helper functions
 "    -> Vim-Plug
+"    -> Key Remapping
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -427,3 +428,17 @@ try
     colorscheme onedark
 catch
 endtry
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Key Remapping
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" A function to create abbreviations.
+fu! Cabbrev(key, value)
+  exe printf('cabbrev <expr> %s (getcmdtype() == ":" && getcmdpos() <= %d) ? %s : %s',
+    \ a:key, 1+len(a:key), string(a:value), string(a:key))
+endfu
+
+" Simplify Explore
+" fe -> file explore
+call Cabbrev('fe', 'Explore')
+
