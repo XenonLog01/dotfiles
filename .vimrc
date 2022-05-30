@@ -432,3 +432,5 @@ nnoremap <leader>u1 :call UnderlineHeading(1);<CR>
 nnoremap <leader>u2 :call UnderlineHeading(2);<CR>
 nnoremap <leader>u3 :call UnderlineHeading(3);<CR>
 
+nnoremap <leader>sr :noh<CR><return>
+
