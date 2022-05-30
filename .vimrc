@@ -413,9 +413,9 @@ call Cabbrev('fev', 'Vexplore')
 " Underline heading in markdown.
 function! UnderlineHeading(level)
     if a:level == 1
-        normal! yypVr=
+        normal! I#<space> 
     elseif a:level == 2
-        normal! yypVr-
+        normal! I##<space>
     else
         normal! I###<space>
     endif
