@@ -15,7 +15,7 @@ dirs:
 build: $(OBJ)
 	$(CC) -o $(OUT)/app $^ $(LDFLAGS)
 
-%.o: %.c %.cpp
+%.o: %.c
 	$(CC) -o $@ -c $< $(CCFLAGS)
 
 run: all
