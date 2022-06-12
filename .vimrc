@@ -209,6 +209,12 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
+" More finger-friendly way to handle window resizing.
+map <C-.> <C-W>>
+map <C-,> <C-W><
+map <C--> <C-W>-
+map <C-=> <C-W>+
+
 " Close the current buffer
 map <leader>bd :Bclose<cr>:tabclose<cr>gT
 
@@ -297,7 +303,7 @@ endif
 " Enable Spell checking by default on startup.
 set spell spelllang=en_us
 
-" Pressing st will toggle and untoggle spell checking
+" Pressing st will toggle and toggle spell checking
 map <leader>st :setlocal spell!<cr>
 
 " Shortcuts using <leader>
@@ -322,7 +328,6 @@ map <leader>x :e ~/buffer.md<cr>
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
@@ -408,7 +413,9 @@ endfu
 " Simplify Explore
 " fe -> file explore
 call Cabbrev('fe', 'Explore')
+" Just for muscle memory's sake
 call Cabbrev('fev', 'Vexplore')
+call Cabbrev('fv', 'Vexplore')
 
 " Underline heading in markdown.
 function! UnderlineHeading(level)
